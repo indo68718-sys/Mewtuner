@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Mew Tuner</title>
+  <style>
+    :root {
+      --bg: #0b0b0b; --panel: #141414; --line: #262626;
+      --fg: #e8e8e8; --dim: #777; --accent: #00ff88;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font-family: ui-monospace, Menlo, monospace; font-size: 14px; padding-bottom: 40px; }
+    
+    header { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; }
+    header h1 { font-size: 16px; margin: 0; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
+    .status { font-size: 12px; color: var(--dim); }
+
+    /* KHUNG AVATAR */
+    .avatar-box { display: flex; justify-content: center; padding: 20px 0; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #111 0%, #0b0b0b 100%); }
+    /* Lưu ý: Tên file ảnh phải là icon.png nằm cùng thư mục */
+    .avatar-box img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 0 16px rgba(0,255,136,0.2); }
+
+    section { padding: 16px; border-bottom: 1px solid var(--line); }
+    label { display: block; font-size: 11px; color: var(--dim); margin-bottom: 10px; letter-spacing: 1px; text-transform: uppercase; }
+    
+    /* NÚT CHẾ ĐỘ AIM */
+    .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .mode { background: var(--panel); border: 1px solid var(--line); color: var(--fg); padding: 14px 6px; font-family: inherit; font-size: 13px; cursor: pointer; border-radius: 2px; text-align: center; transition: .15s; }
+    .mode.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: bold; }
+    .mode small { display: block; font-size: 10px; color: var(--dim); margin-top: 6px; line-height: 1.2; }
+    .mode.active small { color: #003a1f; }
+
+    /* DROPDOWN SÚNG */
+    select { width: 100%; background: var(--panel); color: var(--fg); border: 1px solid var(--line); padding: 14px; font-family: inherit; font-size: 13px; border-radius: 2px; outline: none; appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 10px center; }
+    select option { background: var(--panel); color: var(--fg); }
+
+    /* THÔNG SỐ */
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .stat { background: var(--panel); border: 1px solid var(--line); padding: 12px; border-radius: 2px; }
+    .stat b { display: block; font-size: 10px; color: var(--;dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: normal; }
+    .stat span { font-size: 15px; color font: var(--accent); }
+
+    /* NÚT BẤM */
+    .row { display: flex; gap: 8px; margin-top-size: 8px; }
+    .row button, .row a { flex: 1; text-align: center; text-decoration: none; background:: var(--panel); border: 1px solid var(--line); color: var(--fg); padding: 16px 14 px; font-family: inherit13px; cursor: pointer; border-radius: 2px; font-weight: bold; }
+    .row button.primary, .row a.primary { background: var(--accent); color: #000; border-color: var(--accent); }
+    .row button:active, .row a:active { opacity: 0.8; }
+    
+    canvas { display: block; width: 100%; height: 250px; background: #000; border: 1px solid var(--line); margin-top: 10px; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>MEW TUNER</h1>
+  <div class="status" id="status">● TẮT</div>
+</header>
+
+<div class="avatar-box">
+  <!-- Mày phải có file icon.png nằm cùng thư mục với file này -->
+  <img src="icon.png" alt="Mew Tuner">
+</div>
+
+<section>
+  <label>VPN TUNNEL (IOS)</label>
+  <div class="row">
+    <!-- Bấm nút này để tải file proxyaim.mobileconfig -->
+    <a href="proxyaim.mobileconfig" class="primary" download>TẢI PROFILE VPN</a>
+  </div>
+</section>
+
+<section>
+  <label>CHẾ ĐỘ AIM</label>
+  <div class="modes" id="modes">
+    <button class="mode" data-mode="BODY">BODY<small>bắn thân · dễ trúng</small></button>
+    <button class="mode active" data-mode="NECK">NECK<small>bắn cổ · damage cao</small></button>
+    <button class="mode" data-mode="DRAG">DRAG<small>kéo tâm · bù đạn bay</small></button>
+  </div>
+</section>
+
+<section>
+  <label>SÚNG (ÁP ĐỊNH VỊ MẶC ĐỊNH)</label>
+  <select id="weapon"></select>
+  <div class="grid3" style="margin-top: 10px;">
+    <div class="stat"><b>Muzzle X</b><span id="mx">0</span></div>
+    <div class="stat"><b>Muzzle Y</b><span id="my">0</span></div>
+    <div class="stat"><b>Tốc đạn</b><span id="bs">0</span></div>
+  </div>
+</section>
+
+<section>
+  <label>THAM SỐ SỐNG</label>
+  <div class="grid3">
+    <div class="stat"><b>Mục tiêu</b><span id="tid">—</span></div>
+    <div class="stat"><b>Delta X</b><span id="ddx">—</span></div>
+    <div class="stat"><b>Delta Y</b><span id="ddy">—</span></div>
+  </div>
+</section>
+
+<section>
+  <label>CANVAS DEBUG (TÂM NGẮM + MỤC TIÊU)</label>
+  <canvas id="cv" width="640" height="480"></canvas>
+  <div class="row">
+    <button class="primary" id="btnResolve">PHÂN GIẢI MỤC TIÊU</button>
+  </div>
+</section>
+
+<script>
+  const WEAPONS = [
+    { id:'ar',      name:'Súng trường (AR)',     aim:'NECK', mx:0, my:-8,  bs:800,  drag:.35, br:42, nr:14, hr:10 },
+    { id:'smg',     name:'SMG / Tiểu liên',      aim:'BODY', mx:0, my:-6,  bs:600,  drag:.25, br:46, nr:14, hr:10 },
+    { id:'shotgun', name:'Shotgun',              aim:'BODY', mx:0, my:-10, bs:400,  drag:.15, br:60, nr:18, hr:12 },
+    { id:'dmr',     name:'DMR / Bán tự động',    aim:'NECK', mx:0, my:-12, bs:900,  drag:.55, br:36, nr:12, hr:9  },
+    { id:'sniper',  name:'Sniper / Bắn tỉa',     aim:'DRAG', mx:0, my:-14, bs:1200, drag:.85, br:32, nr:11, hr:8  },
+    { id:'pistol',  name:'Súng lục',             aim:'NECK', mx:0, my:-5,  bs:500,  drag:.30, br:40, nr:13, hr:10 }
+  ];
+
+  let currentMode = 'NECK';
+  let currentWeapon = WEAPONS[0];
+  const $ = id => document.getElementById(id);
+
+  function renderWeaponSelect() {
+    const sel = $('weapon');
+    sel.innerHTML = '';
+    WEAPONS.forEach(w => {
+      const opt = document.createElement('option');
+      opt.value = w.id;
+      opt.textContent = w.name + ' · ' + w.aim;
+      sel.appendChild(opt);
+    });
+    sel.value = currentWeapon.id;
+    
+    sel.onchange = (e) => {
+      currentWeapon = WEAPONS.find(w => w.id === e.target.value) || WEAPONS[0];
+      setMode(currentWeapon.aim);
+      refreshWeaponStats();
+    };
+  }
+
+  function refreshWeaponStats() {
+    const w = currentWeapon;
+    $('mx').textContent = w.mx;
+    $('my').textContent = w.my;
+    $('bs').textContent = w.bs;
+  }
+
+  function setMode(m) {
+    currentMode = m;
+    document.querySelectorAll('.mode').forEach(b => {
+      b.classList.toggle('active', b.dataset.mode === m);
+    });
+  }
+
+  function setupModeButtons() {
+    document.querySelectorAll('.mode').forEach(btn => {
+      btn.onclick = () => setMode(btn.dataset.mode);
+    });
+  }
+
+  function resolve() {
+    const cv = $('cv');
+    const ctx = cv.getContext('2d');
+    const cx = cv.width / 2;
+    const cy = cv.height / 2;
+    const fov = 300;
+
+    // Tạo mục tiêu ngẫu nhiên
+    const targets = [];
+    for (let i = 0; i < 4; i++) {
+      targets.push({
+        id: i,
+        x: cx + (Math.random() - 0.5) * 400,
+        y: cy + (Math.random() - 0.5) * 300,
+        vx: (Math.random() - 0.5) * 400,
+        vy: (Math.random() - 0.5) * 200,
+        distance: 10 + Math.random() * 50,
+        visible: true
+      });
+    }
+
+    let best = null, bestScore = Infinity;
+    targets.forEach(t => {
+      const dist = Math.hypot(t.x - cx, t.y - cy);
+      if (dist > fov) return;
+      const score = (dist / fov) * 0.7 + (t.distance / 100) * 0.3;
+      if (score < bestScore) { bestScore = score; best = t; }
+    });
+
+    if (!best) {
+      ['tid','ddx','ddy'].forEach(k => $(k).textContent = '—');
+      drawCanvas(cx, cy, targets, null);
+      return;
+    }
+
+    let anchorX = best.x, anchorY = best.y;
+    if (currentMode === 'BODY') anchorY += currentWeapon.br * 0.15;
+    else if (currentMode === 'NECK') anchorY -= currentWeapon.nr * 0.1;
+    else if (currentMode === 'HEAD') anchorY -= currentWeapon.hr;
+
+    const leadTime = (currentMode === 'DRAG') ? best.distance / currentWeapon.bs : 0;
+    const leadX = best.vx * leadTime * currentWeapon.drag;
+    const leadY = best.vy * leadTime * currentWeapon.drag;
+
+    const aimX = anchorX + currentWeapon.mx + leadX;
+    const aimY = anchorY + currentWeapon.my + leadY;
+
+    $('tid').textContent = best.id;
+    $('ddx').textContent = (aimX - cx).toFixed(2);
+    $('ddy').textContent = (aimY - cy).toFixed(2);
+
+    drawCanvas(cx, cy, targets, { x: aimX, y: aimY });
+  }
+
+  function drawCanvas(cx, cy, targets, aim) {
+    const cv = $('cv');
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#000'; ctx.fillRect(0, 0, cv.width, cv.height);
+    
+    ctx.strokeStyle = '#1f3a2a'; ctx.beginPath(); ctx.arc(cx, cy, 300, 0, Math.PI * 2); ctx.stroke();
+
+    targets.forEach(t => {
+      ctx.fillStyle = '#2a3f33';
+      ctx.fillRect(t.x - currentWeapon.br/2, t.y - currentWeapon.br/2, currentWeapon.br, currentWeapon.br);
+      ctx.fillStyle = '#3f6a50';
+      ctx.fillRect(t.x - currentWeapon.nr/2, t.y - currentWeapon.br/2 - currentWeapon.nr, currentWeapon.nr, currentWeapon.nr);
+      ctx.fillStyle = '#66a37d';
+      ctx.beginPath(); ctx.arc(t.x, t.y - currentWeapon.br/2 - currentWeapon.nr - currentWeapon.hr, currentWeapon.hr, 0, Math.PI * 2); ctx.fill();
+    });
+
+    ctx.strokeStyle = '#fff'; ctx.beginPath();
+    ctx.moveTo(cx - 10, cy); ctx.lineTo(cx + 10, cy);
+    ctx.moveTo(cx, cy - 10); ctx.lineTo(cx, cy + 10);
+    ctx.stroke();
+
+    if (aim) {
+      ctx.strokeStyle = '#00ff88'; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(aim.x, aim.y, 8, 0, Math.PI * 2); ctx.stroke();
+      ctx.lineWidth = 1;
+    }
+  }
+
+  renderWeaponSelect();
+  refreshWeaponStats();
+  setupModeButtons();
+  $('btnResolve').onclick = resolve;
+  drawCanvas(320, 240, [], null);
+</script>
+</body>
+</html>
