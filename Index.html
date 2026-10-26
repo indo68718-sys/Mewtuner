@@ -4,6 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>Mew Tuner</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Mew Tuner">
+  
   <style>
     :root {
       --bg: #0b0b0b; --panel: #141414; --line: #262626;
@@ -18,7 +25,6 @@
 
     /* KHUNG AVATAR */
     .avatar-box { display: flex; justify-content: center; padding: 20px 0; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #111 0%, #0b0b0b 100%); }
-    /* Lưu ý: Tên file ảnh phải là icon.png nằm cùng thư mục */
     .avatar-box img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 0 16px rgba(0,255,136,0.2); }
 
     section { padding: 16px; border-bottom: 1px solid var(--line); }
@@ -38,12 +44,12 @@
     /* THÔNG SỐ */
     .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .stat { background: var(--panel); border: 1px solid var(--line); padding: 12px; border-radius: 2px; }
-    .stat b { display: block; font-size: 10px; color: var(--;dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: normal; }
-    .stat span { font-size: 15px; color font: var(--accent); }
+    .stat b { display: block; font-size: 10px; color: var(--dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; font-weight: normal; }
+    .stat span { font-size: 15px; color: var(--accent); }
 
     /* NÚT BẤM */
-    .row { display: flex; gap: 8px; margin-top-size: 8px; }
-    .row button, .row a { flex: 1; text-align: center; text-decoration: none; background:: var(--panel); border: 1px solid var(--line); color: var(--fg); padding: 16px 14 px; font-family: inherit13px; cursor: pointer; border-radius: 2px; font-weight: bold; }
+    .row { display: flex; gap: 8px; margin-top: 8px; }
+    .row button, .row a { flex: 1; text-align: center; text-decoration: none; background: var(--panel); border: 1px solid var(--line); color: var(--fg); padding: 16px 14px; font-family: inherit; font-size: 13px; cursor: pointer; border-radius: 2px; font-weight: bold; }
     .row button.primary, .row a.primary { background: var(--accent); color: #000; border-color: var(--accent); }
     .row button:active, .row a:active { opacity: 0.8; }
     
@@ -58,15 +64,14 @@
 </header>
 
 <div class="avatar-box">
-  <!-- Mày phải có file icon.png nằm cùng thư mục với file này -->
   <img src="icon.png" alt="Mew Tuner">
 </div>
 
 <section>
   <label>VPN TUNNEL (IOS)</label>
   <div class="row">
-    <!-- Bấm nút này để tải file proxyaim.mobileconfig -->
-    <a href="proxyaim.mobileconfig" class="primary" download>TẢI PROFILE VPN</a>
+    <!-- Nút tải file mobileconfig. Nhớ up file mewtuner.mobileconfig lên Github cùng thư mục -->
+    <a href="mewtuner.mobileconfig" class="primary" download>CÀI ĐẶT APP + VPN</a>
   </div>
 </section>
 
@@ -165,7 +170,6 @@
     const cy = cv.height / 2;
     const fov = 300;
 
-    // Tạo mục tiêu ngẫu nhiên
     const targets = [];
     for (let i = 0; i < 4; i++) {
       targets.push({
