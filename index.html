@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <title>Mew Tuner</title>
   
+  <!-- KHAI BÁO PWA ĐỂ LẤY ICON VÀ AVATAR CHO CẢ IOS VÀ ANDROID -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -23,7 +24,7 @@
     header h1 { font-size: 16px; margin: 0; letter-spacing: 2px; color: var(--accent); text-transform: uppercase; }
     .status { font-size: 12px; color: var(--dim); }
 
-    /* KHUNG AVATAR */
+    /* KHUNG AVATAR HIỂN THỊ TRONG APP */
     .avatar-box { display: flex; justify-content: center; padding: 20px 0; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #111 0%, #0b0b0b 100%); }
     .avatar-box img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); box-shadow: 0 0 16px rgba(0,255,136,0.2); }
 
@@ -63,15 +64,15 @@
   <div class="status" id="status">● TẮT</div>
 </header>
 
+<!-- AVATAR BÓNG ĐÊM -->
 <div class="avatar-box">
   <img src="icon.png" alt="Mew Tuner">
 </div>
 
 <section>
-  <label>VPN TUNNEL (IOS)</label>
+  <label>VPN TUNNEL</label>
   <div class="row">
-    <!-- Nút tải file mobileconfig. Nhớ up file mewtuner.mobileconfig lên Github cùng thư mục -->
-    <a href="mewtuner.mobileconfig" class="primary" download>CÀI ĐẶT APP + VPN</a>
+    <a href="mewtuner.mobileconfig" class="primary" download>TẢI PROFILE VPN (IOS)</a>
   </div>
 </section>
 
