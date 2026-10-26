@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>PayloadType</key>
+			<string>com.apple.webClip.managed</string>
+			<key>PayloadIdentifier</key>
+			<string>com.mewtuner.webclip</string>
+			<key>PayloadUUID</key>
+			<string>A1B2C3D4-E5F6-4A5B-8C9D-0E1F2A3B4C5D</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadDisplayName</key>
+			<string>Mew Tuner Web App</string>
+			<key>URL</key>
+			<string>https://indo68718-sys.github.io/Mewtuner/</string>
+			<key>IsRemovable</key>
+			<true/>
+			<key>Label</key>
+			<string>Mew Tuner</string>
+			<key>FullScreen</key>
+			<true/>
+			<key>IgnoreManifestScope</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>PayloadType</key>
+			<string>com.apple.vpn.managed</string>
+			<key>PayloadIdentifier</key>
+			<string>com.mewtuner.vpn.ikev2</string>
+			<key>PayloadUUID</key>
+			<string>7C4B1A22-3D6E-4F1B-9A2C-11E7F2B3A001</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>PayloadDisplayName</key>
+			<string>Mew Tuner VPN</string>
+			<key>UserDefinedName</key>
+			<string>Mew Tuner</string>
+			<key>VPNType</key>
+			<string>IKEv2</string>
+			<key>IKEv2</key>
+			<dict>
+				<key>RemoteAddress</key>
+				<string>103.111.22.33</string>
+				<key>RemoteIdentifier</key>
+				<string>103.111.22.33</string>
+				<key>LocalIdentifier</key>
+				<string>client@mewtuner</string>
+				<key>AuthenticationMethod</key>
+				<string>SharedSecret</string>
+				<key>SharedSecret</key>
+				<data>bWV3MTIz</data>
+				<key>ExtendedAuthEnabled</key>
+				<integer>0</integer>
+				<key>EnablePFS</key>
+				<integer>1</integer>
+				<key>IKESecurityAssociationParameters</key>
+				<dict>
+					<key>EncryptionAlgorithm</key>
+					<string>AES-256</string>
+					<key>IntegrityAlgorithm</key>
+					<string>SHA2-256</string>
+					<key>DiffieHellmanGroup</key>
+					<integer>19</integer>
+				</dict>
+			</dict>
+			<key>IPv4</key>
+			<dict>
+				<key>OverridePrimary</key>
+				<integer>1</integer>
+			</dict>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Mew Tuner (Full)</string>
+	<key>PayloadIdentifier</key>
+	<string>com.mewtuner.config</string>
+	<key>PayloadUUID</key>
+	<string>2B8D9F14-7A3C-4C0E-8E1F-9B5E2A3F4C02</string>
+	<key>PayloadOrganization</key>
+	<string>Mew Tuner</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>
